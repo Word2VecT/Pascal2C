@@ -1,0 +1,350 @@
+# 第一关：C1 语言关键知识点
+
+
+1. **C1 语言的函数特性**
+
+   C1 语言支持多个函数，并且函数可以带参数或返回值。这意味着 C1 语言具有一定的结构化编程能力，允许程序员将代码组织成多个模块化的功能单元，提高代码的复用性和可读性。
+
+   关键知识点：
+   * C1 允许多个函数的存在。
+   * 函数可以带参数和返回值。
+2. **变量声明规则**
+
+   C1 语言对变量声明的位置有严格要求，变量声明只能出现在函数内部的语句块的最开始，而不能随意出现在代码的任意位置。这与 C89 标准相似。
+
+   关键知识点：
+   * 变量不能在函数外部声明，即不支持全局变量。
+   * 变量必须在语句块的开始部分声明，而不能在代码执行的中途声明变量。
+3. **变量声明的合法性**
+
+   C1 语言对变量的声明方式有一定的约束，涉及基本数据类型、数组、作用域和初始化方式。以下是一些典型的合法或非法变量声明：
+
+   ✅ 合法的变量声明：
+   * `int a[2][3];` → 合法的二维数组声明。
+   * `float a[]={12};` → 合法，数组大小由编译器推导。
+   * `float a[2]={12};` → 合法，第二个元素自动初始化为 0。
+   * `{ int a=3; {float a=4; a = 4+a; } }` → 合法，变量作用域不同，不冲突。
+   * `void f(){ { int a=3; a = 4+a; } { float a=4; a = 4+a; }}` → 合法，每个 `a` 都有独立的作用域。
+
+   ❌ 非法的变量声明：
+   * `const int n=4; int a[n];` → 非法，数组大小必须是编译期常量，而 `n` 可能不会被 C1 视为编译时常量。
+   * `int a=3; void f() { a = 4+a; int a=6; a = 4+ a; }` → 非法，局部变量 `a` 的声明导致作用域冲突。
+4. **作用域规则与变量遮蔽**
+
+   C1 语言支持局部变量的作用域，局部变量会遮蔽外部作用域的同名变量。因此，在嵌套的作用域中，相同变量名的不同定义不会相互影响。
+
+   **示例：**
+
+   ```cpp
+   int a = 3;
+   void f()
+   {
+       a = a + 4;   // 这里的 a 是全局变量
+       int a = 5;   // 局部变量 a，遮蔽了全局变量
+       a = a + 4;   // 这里的 a 只影响局部变量
+   }
+   ```
+
+   当 `f()` 被调用时，全局 `a` 先被修改，而局部 `a` 仅在 `f()` 内部生效。
+5. **代码执行分析**
+
+   在 C1 语言中，函数的调用顺序、变量的作用域以及作用域遮蔽规则决定了代码的最终执行结果。例如，以下代码的执行逻辑：
+
+   ```cpp
+   int a = 3;
+   void f()
+   {
+       a = a + 4;   // 修改全局变量 a，a 变为 7
+       int a = 5;   // 局部变量 a 重新定义
+       a = a + 4;   // 这里的 a 是局部变量 a，修改后为 9
+   }
+   void main()
+   {
+       f();
+       f();
+   }
+   ```
+
+   程序的输出结果是：
+
+   `7 9 11 9 `
+
+   **==关键知识点：==**
+   * 变量作用域影响代码执行结果。
+   * 局部变量不会影响全局变量。
+   * 全局变量会在每次函数调用时累积其值，而局部变量的生命周期仅限于函数执行期间。
+
+# 第二关：C1的词法分析程序
+
+### 理解 C1 词法描述文件
+
+
+ ![](/api/attachments.redirect?id=b5ba6c94-28fc-478f-a053-e1b025bd57a7)
+
+
+### 关键问题解答
+
+
+1. Q1：ANTLR 词法分析器的构建流程
+   - [ ] 编写 C1 词法规则（C1Lexer.g4）。
+   - [ ] 使用 ANTLR 生成词法分析器（Java 或 C++）。
+   - [ ] 编译并运行词法分析器，测试 C1 代码。
+2. Q2：词法分析器的核心数据结构
+   - [ ] `C1Lexer`：ANTLR 生成的词法分析器类，解析 C1 代码。
+   - [ ] `ATN`：词法状态机，用于解析 Token。
+   - [ ] `DFA`：确定有限状态机，加速词法分析。
+3. Q3：词法分析器的执行流程
+   - [ ] `Lexer::nextToken()`：逐个字符扫描，匹配 Token。
+   - [ ] `BufferedTokenStream::LA(n)`：Lookahead 机制，预读取 Token。
+   - [ ] C1Lexer 与 CommonTokenStream 关系。
+
+# 第三关：C1 语法分析器的设计与实现
+
+### 实验步骤
+
+
+1. 分析 C1 语言语法规则
+
+   C1 语言的语法规则在 `C1Parser.g4` 文件中进行了详细描述。首先，分析并理解文法中的基本构成，包括常量声明、变量声明、表达式、函数定义等语法结构。通过对文法的细致分析，确认哪些部分是必需的，哪些部分可以进一步优化或补充。
+2. 修改并完善语法描述文件
+
+   根据 C1 语言的 EBNF 语法规则，我们对 `C1Parser.g4` 文件进行了修改和完善。C1 语言的语法结构相对简单，主要包括基本的数据类型（如 `int` 和 `float`）、控制结构（如 `if`、`while`、`for`）、表达式（如加减乘除）、函数定义等。为了更好地支持这些功能，我们设计了相关的语法规则并进行实现。
+3. 使用 ANTLR 生成语法分析器
+
+   在修改完成语法描述文件后，使用 ANTLR 工具生成语法分析器：
+
+   ```bash
+   cd c1recognizer/grammar
+   antlr4 C1Parser.g4 -Dlanguage=Java
+   javac C1Parser*.java
+   ```
+
+   这样，ANTLR 将根据我们定义的语法规则生成解析器和词法分析器的 Java 类，并将其编译为可执行的代码。
+4. 编写测试用例
+
+   为了验证语法分析器的正确性，我们编写了一些测试用例，包括正确的 C1 程序和故意带有语法错误的 C1 程序。测试用例的命名规则如下：
+   * 正确的测试用例：以 `pt_` 开头（例如 `pt_test1.c1`）。
+   * 错误的测试用例：以 `ft_` 开头（例如 `ft_test1.c1`）。
+
+   这些测试用例将用于测试语法分析器是否能够正确解析 C1 程序，并检查语法错误是否能被及时捕获。
+5. 使用 `grun` 工具测试解析器
+
+   在语法分析器生成并编译完成后，使用 `grun` 工具测试解析器的功能。`grun` 是一个命令行工具，可以用来生成解析树并可视化输出。我们通过以下命令运行测试：
+
+   ```bash
+   grun C1Parser compilationUnit -tree < test.c1
+   ```
+
+   这将生成输入文件 `test.c1` 的解析树，并以树状结构的形式输出，帮助我们查看语法分析器的工作过程。
+6. 分析测试结果
+
+   通过运行正确和错误的测试用例，查看 grun 输出的解析树及语法分析器的错误信息，确保语法分析器能够正确地解析有效的 C1 程序，并在遇到语法错误时能够及时报错。对于正确的程序，解析树应当符合预期的结构；对于错误的程序，语法分析器应能够提供清晰的错误提示，指示具体的错误位置。
+
+### 核心代码实现
+
+根据 C1 语言的语法规则，我们对 `C1Parser.g4` 进行了修改和扩展，补充了完整的语法规则。以下是文法文件的一部分示例，涵盖了 C1 语言中的一些基本结构：
+
+```clike
+parser grammar C1Parser;
+
+options { tokenVocab = C1Lexer; }
+
+compilationUnit
+    : (decl | funcdef)* EOF
+    ;
+
+decl
+    : constdecl
+    | vardecl
+    ;
+
+constdecl
+    : 'const' btype constdef (',' constdef)* ';'
+    ;
+
+constdef
+    : Identifier '=' exp
+    ;
+
+vardecl
+    : btype vardef (',' vardef)* ';'
+    ;
+
+vardef
+    : Identifier
+    | Identifier '=' exp
+    | Identifier '[' IntConst ']' ('[' IntConst ']')*
+    ;
+
+btype
+    : 'int'
+    | 'float'
+    ;
+
+funcdef
+    : btype Identifier '(' (btype Identifier (',' btype Identifier)*)? ')' block
+    ;
+
+block
+    : '{' stmt* '}'
+    ;
+
+stmt
+    : lval '=' exp ';'
+    | Identifier '(' (exp (',' exp)*)? ')' ';'
+    | block
+    | 'return' exp? ';'
+    | 'if' '(' cond ')' stmt ('else' stmt)?
+    | 'while' '(' cond ')' stmt
+    | 'for' '(' stmt? ';' cond? ';' stmt? ')' stmt
+    ;
+
+lval
+    : Identifier ('[' exp ']')*
+    ;
+
+cond
+    : exp ('==' | '!=' | '<' | '>' | '<=' | '>=') exp
+    ;
+
+exp
+    : (Plus | Minus)? exp
+    | exp (Multiply | Divide | Modulo) exp
+    | exp (Plus | Minus) exp
+    | LeftParen exp RightParen
+    | number
+    | Identifier
+    | Identifier '[' exp ']'
+    ;
+
+number
+    : IntConst
+    | FloatConst
+    ;
+```
+
+### 测试用例
+
+
+1. 正确的测试用例 (`pt_test1.c1`)
+
+   ```clike
+   const int a = 10;
+   int b, c;
+   float d = 3.14;
+   int add(int x, int y) {
+       return x + y;
+   }
+   void main() {
+       int x = 5;
+       if (x > 0) {
+           x = x - 1;
+       }
+       while (x < 10) {
+           x = x + 1;
+       }
+       return;
+   }
+   ```
+2. 错误的测试用例 (`ft_test1.c1`)
+
+   ```clike
+   int a = ;  // 语法错误，缺少表达式
+   void main() {
+       if (x > 10  // 语法错误，缺少右括号
+           x = x + 1;
+       }
+   }
+   ```
+
+### **实验问题与分析**
+
+
+1. Parser-Q1：LL(\*)分析方法的原理
+   * 核心逻辑：LL() 是自上而下的分析方法，可以在每个节点根据多种预测方案来选择分析路径。与传统的 LL 分析方法不同，LL() 支持更加灵活的预测，使得分析器能够处理更加复杂的语言文法。
+   * 区别：传统的 LL 分析方法通常要求文法无左递归，而 LL(\*) 可以通过扩大lookahead窗口来解决某些左递归问题，具有更高的灵活性。
+2. Parser-Q2：Adaptive LL(\*)分析方法的原理
+   * 核心逻辑：Adaptive LL() 分析方法在分析过程中动态调整 lookahead 大小，针对不同的输入使用不同的分析策略。与 LL() 方法相比，它能根据当前的输入自适应地选择合适的分析方式，从而提高解析效率和准确度。
+   * 比较：LL() 是*静态的，而 Adaptive LL(*) 可以根据输入动态调整解析策略，进一步提升性能。
+
+# 第四关： 生成 AST 的 C1 语言解析器
+
+### 抽象语法树
+
+AST（Abstract Syntax Tree） 是语法分析的一个重要结果，它比解析树（Parse Tree）更加简洁，去除了语法分析过程中产生的冗余节点，例如括号 `()`、分号 `;` 等，仅保留程序的核心语法结构。
+
+| **对比项** | **解析树 (Parse Tree)** | **抽象语法树 (AST)** |
+|----|----|----|
+| 结构 | 详细，包含所有语法信息 | 仅保留核心语法 |
+| 节点类型 | 词法、语法节点均有 | 仅语法相关节点 |
+| 冗余信息 | 包含括号、运算符等 | 去除无关符号 |
+| 作用 | 解析器内部使用 | 供编译器优化和代码生成 |
+
+例如，解析树：
+
+```clike
+exp
+ ├── exp
+ │   ├── number(2)
+ ├── +
+ ├── exp
+ │   ├── number(3)
+```
+
+对应的 AST：
+
+```clike
+ +
+ ├── 2
+ ├── 3
+```
+
+### 设计与实现
+
+在 ASTNode.java 文件中，我们定义了 AST 的基本结构：
+
+```java
+public abstract class ASTNode {
+    public abstract void accept(ASTVisitor visitor);
+}
+
+public class BinaryOpNode extends ASTNode {
+    public String op;
+    public ASTNode left, right;
+
+    public BinaryOpNode(String op, ASTNode left, ASTNode right) {
+        this.op = op;
+        this.left = left;
+        this.right = right;
+    }
+
+    @Override
+    public void accept(ASTVisitor visitor) {
+        visitor.visit(this);
+    }
+}
+
+public class NumberNode extends ASTNode {
+    public int value;
+
+    public NumberNode(int value) {
+        this.value = value;
+    }
+
+    @Override
+    public void accept(ASTVisitor visitor) {
+        visitor.visit(this);
+    }
+}
+```
+
+这段代码定义了 C1 语言的抽象语法树（AST） 结构，包括一个基类 `ASTNode`，以及表示二元运算的 `BinaryOpNode` 和表示数值常量的 `NumberNode`。`BinaryOpNode` 存储运算符（如 `+`、`-`）以及左右操作数，而 `NumberNode` 存储整数值。所有节点都实现了 `accept(ASTVisitor visitor)` 方法，支持访问者模式（Visitor Pattern），让外部的AST访问器处理 AST，如计算表达式的值或转换代码。
+
+### 实验结果
+
+
+1. 成功实现 AST 生成，解析 `exp` 语法并构造 AST。
+2. Visitor 模式 遍历解析树，生成符合 C1 语言语法的 AST。
+3. 通过 测试用例，验证了 AST 生成的正确性和错误处理能力。
+
+
