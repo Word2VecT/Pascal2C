@@ -2,9 +2,9 @@
 
 ## 成员
 
-Claude-3-7-sonnet(with MCP)$*$ & 成润东$*$ & 连琎宇$*$ & 吕志杰$*$ & 唐梓楠$*$（字母排序）
+Claude-3-7-sonnet(with MCP)$^\star$ & 成润东$^\star$ & 连琎宇$^\star$ & 吕志杰$^\star$ & 唐梓楠$^\star$（字母排序）
 
-> $*$ means equal contribution
+> $^\star$ means equal contribution
 
 ## 项目文档
 
