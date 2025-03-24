@@ -1,5 +1,7 @@
 # Pascal2C
 
+![logo](logo.jpeg)
+
 ## 成员
 
 - Claude-3-7-sonnet(with MCP) $^ \star$
