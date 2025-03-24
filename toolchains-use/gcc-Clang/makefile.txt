@@ -1,0 +1,30 @@
+CC=gcc
+CFLAGS=-Wall -Wextra
+ASMFLAGS=-S
+OUT=sort
+
+all: $(OUT)
+
+$(OUT): sort.o
+	$(CC) -o $@ $^
+
+sort.o: sort.c
+	$(CC) $(CFLAGS) -c sort.c -o sort.o
+
+preprocess:
+	$(CC) -E sort.c -o sort.i
+
+asm-32:
+	$(CC) $(ASMFLAGS) -m32 sort.c -o sort_32.s
+
+asm-64:
+	$(CC) $(ASMFLAGS) -m64 sort.c -o sort_64.s
+
+clang-asm-32:
+	clang $(ASMFLAGS) -m32 sort.c -o clang_sort_32.s
+
+clang-asm-64:
+	clang $(ASMFLAGS) -m64 sort.c -o clang_sort_64.s
+
+clean:
+	rm -f $(OUT) sort.o sort.i sort_32.s sort_64.s clang_sort_32.s clang_sort_64.s
