@@ -83,6 +83,4 @@ make
 - 不支持完整的模块系统
 - 不支持一些Pascal特定的语言特性
 
-## 许可证
-
-MIT License 
+updateing...
