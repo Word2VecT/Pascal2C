@@ -1,6 +1,8 @@
 # Pascal2C
 
-![logo](logo.jpeg)
+<div>
+  <img src="logo.jpeg" alt="LOGO" style="width:200px; height:auto;" />
+</div>
 
 ## 成员
 
