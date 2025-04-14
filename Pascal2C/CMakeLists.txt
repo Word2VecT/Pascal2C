@@ -18,8 +18,15 @@ include_directories(
 # Add source directory
 add_subdirectory(src)
 
-# Add tests directory if testing is enabled
-option(BUILD_TESTS "Build tests" OFF)
+# Google Test setup
+option(BUILD_TESTS "Build tests" ON)
 if(BUILD_TESTS)
+    # Find the system-installed GoogleTest package
+    find_package(GTest REQUIRED)
+    
+    # Enable testing
+    enable_testing()
+    
+    # Add tests directory
     add_subdirectory(tests)
 endif() 
