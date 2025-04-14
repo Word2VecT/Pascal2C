@@ -25,8 +25,8 @@ set(HEADERS
 add_library(Pascal2C_lib STATIC ${LIB_SOURCES} ${HEADERS})
 
 # Generate executable
-add_executable(pascal2c main.cpp)
-target_link_libraries(pascal2c Pascal2C_lib)
+add_executable(pascc main.cpp)
+target_link_libraries(pascc Pascal2C_lib)
 
 # Install target
-install(TARGETS pascal2c DESTINATION bin) 
+install(TARGETS pascc DESTINATION bin) 

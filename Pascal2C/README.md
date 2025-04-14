@@ -76,14 +76,18 @@ ctest
 ## 使用方法 (Usage)
 
 ```bash
-./pascal2c <输入文件> <输出文件>
+./pascc -i <输入文件.pas>
 ```
+
+输出文件将保存为当前目录下的同名.c文件。
 
 例如 (Example):
 
 ```bash
-./pascal2c ../examples/hello.pas hello.c
+./pascc -i ../examples/hello.pas
 ```
+
+这将在当前目录生成 `hello.c` 文件。
 
 ## 支持的Pascal功能 (Supported Pascal Features)
 

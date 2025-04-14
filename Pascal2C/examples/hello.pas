@@ -1,9 +1,11 @@
 program HelloWorld;
 var
-    i, sum: integer;
-    greeting: string;
-    isRunning: boolean;
-
+  i: integer;
 begin
-    greeting := 'Hello, World!';
-end. 
+  i := 1;
+  while i <= 5 do
+  begin
+    writeln(i);
+    i := i + 1;
+  end;
+end.

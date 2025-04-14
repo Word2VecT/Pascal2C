@@ -8,6 +8,6 @@
 // Global variable declarations
 
 int main() {
-    greeting = "Hello, World!";
+    i = 1;
     return 0;
 }
