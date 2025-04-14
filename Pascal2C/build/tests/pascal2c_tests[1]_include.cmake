@@ -1,5 +1,0 @@
-if(EXISTS "/Users/tang/Course/编译原理课程设计/lab/Pascal2C/build/tests/pascal2c_tests[1]_tests.cmake")
-  include("/Users/tang/Course/编译原理课程设计/lab/Pascal2C/build/tests/pascal2c_tests[1]_tests.cmake")
-else()
-  add_test(pascal2c_tests_NOT_BUILT pascal2c_tests_NOT_BUILT)
-endif()
