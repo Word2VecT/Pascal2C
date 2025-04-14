@@ -58,6 +58,7 @@ CMakeUserPresets.json
 # Kernel Module Compile Results
 *.mod*
 *.cmd
+.cache/
 .tmp_versions/
 modules.order
 Module.symvers
@@ -70,7 +71,8 @@ dkms.conf
 .LSOverride
 
 # Icon must end with two \r
-Icon
+Icon
+
 
 # Thumbnails
 ._*
