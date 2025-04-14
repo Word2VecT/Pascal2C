@@ -107,7 +107,7 @@ std::unique_ptr<ProgramNode> programRoot;
 #  endif
 # endif
 
-#include "pascal_parser.hpp"
+#include "pascal_parser.h"
 /* Symbol kind.  */
 enum yysymbol_kind_t
 {

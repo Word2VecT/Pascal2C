@@ -1,6 +1,5 @@
-#include "code_generator.h"
-#include "ast.h"
-#include <iostream>
+#include "../include/code_generator.h"
+#include "../include/ast.h"
 
 CodeGenerator::CodeGenerator(const std::string& outputFilename)
     : outputFile(outputFilename), indentLevel(0), isInFunctionBody(false) {

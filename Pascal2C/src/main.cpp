@@ -1,10 +1,8 @@
-#include <iostream>
-#include <fstream>
-#include <string>
-#include "ast.h"
-#include "code_generator.h"
-#include "pascal_parser.h"
+#include "../include/ast.h"
+#include "../include/code_generator.h"
 #include "pascal_lexer.h"
+#include "pascal_parser.h"
+#include <iostream>
 
 // 声明外部变量
 extern std::unique_ptr<ProgramNode> programRoot;

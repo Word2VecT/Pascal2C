@@ -1,6 +1,5 @@
-#include "ast.h"
-#include "code_generator.h"
-#include <iostream>
+#include "../include/ast.h"
+#include "../include/code_generator.h"
 
 // ProgramNode implementation
 void ProgramNode::generate(CodeGenerator& generator) const {

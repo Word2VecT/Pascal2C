@@ -1,4 +1,4 @@
-#include "symbol_table.h"
+#include "../include/symbol_table.h"
 
 // Scope implementation
 bool Scope::addSymbol(const std::string& name, const SymbolInfo& info) {
